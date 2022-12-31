@@ -1,6 +1,8 @@
 import check_square from "../../assets/check-square.svg"
 import send from "../../assets/send.svg"
 
+import { Card } from "../../components/Card"
+
 import "./style.scss"
 
 export function App() {
@@ -22,6 +24,13 @@ export function App() {
           <img src={send} alt="" />
         </button>
       </form>
+
+      <div id="cards">
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+        <Card></Card>
+      </div>
     </div>
   )
 }
