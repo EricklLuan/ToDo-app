@@ -13,6 +13,25 @@
 
     margin-right: 10px;
     padding: 4px;
+
+    display: flex;
+    align-items: center;
+    justify-content: space-around;
+
+    button {
+      background: #252525;
+      border: none;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border-radius: 50%;
+
+      transition: filter .2s ease-in-out;
+      cursor: pointer;
+
+      &:hover { filter: brightness(0.8); }
+    }
   }
 
   #work {
@@ -30,7 +49,7 @@
     display: flex;
     align-items: center;
 
-    #work-text {
+    .work-text {
       width: 100%;
       height: fit-content;
       
@@ -38,7 +57,7 @@
       color: white;
       
       border: none;
-      resize: vertical;
+      resize: none;
       overflow: hidden;
 
       margin-right: calc(32px + 16px);
