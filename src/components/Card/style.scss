@@ -49,9 +49,12 @@
     display: flex;
     align-items: center;
 
+    .cut {
+      text-decoration: line-through;
+    }
+
     .work-text {
       width: 100%;
-      height: fit-content;
       
       background: none;
       color: white;
@@ -71,6 +74,7 @@
 
     #maked {
       margin: 16px;
+      
       width: 32px;
       height: 32px;
     }

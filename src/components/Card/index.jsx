@@ -1,9 +1,13 @@
+import { useState } from 'react'
+
 import trash from '../../assets/trash-fill.svg'
 import pencil from '../../assets/pencil-square.svg'
 
 import './style.scss'
 
-export function Card({text}) {
+export function Card({text, remove, id}) {
+
+  const [textCut, setTextCut] = useState(false)
 
   window.onresize = () => {
     for (let index = 0; index < document.getElementsByClassName("work-text").length; index++) {
@@ -34,7 +38,33 @@ export function Card({text}) {
 
   function handleFinishEditing(e) {
     const textarea = e.currentTarget
+
+    remove[1](prevState => {
+      const index = prevState.findIndex(card => card.id == id)
+      if (index != -1) {
+        prevState[index].text = textarea.value
+      }
+
+      localStorage.setItem("cards", JSON.stringify([...prevState])) 
+
+      return [...prevState]
+    })
+
     textarea.disabled = true
+  }
+
+  function handleRemoveCards() {
+    remove[1](prevState => {
+      
+      const index = prevState.findIndex(card => card.id == id)
+      if (index != -1) {
+        prevState.splice(index, 1)
+      }
+
+      localStorage.setItem("cards", JSON.stringify([...prevState])) 
+
+      return [...prevState]
+    })
   }
 
   return (
@@ -48,15 +78,15 @@ export function Card({text}) {
         <button onClick={e => handleEditWorkText(e)}>
           <img src={pencil} alt="edit card" srcset="" />
         </button>
-        <button>
+        <button onClick={() => handleRemoveCards()}>
           <img src={trash} alt="delete card" srcset="" />
         </button>
       </section>
 
       <section id='work'>
-        <input type="checkbox" id="maked" />
+        <input type="checkbox" id="maked" value={"true"} onClick={() => setTextCut(!textCut)}/>
         <textarea 
-          className="work-text"
+          className={(textCut === true ? "cut" : "") + " work-text"}
           rows={1}
           defaultValue={text}
           onInput={e => handleTextAreaResize(e)}

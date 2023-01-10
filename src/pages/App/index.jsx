@@ -1,4 +1,4 @@
-import { useState } from "react"
+import { useEffect, useState } from "react"
 
 import check_square from "../../assets/check-square.svg"
 import send from "../../assets/send.svg"
@@ -19,13 +19,26 @@ export function App() {
     if (cardText === "") return
 
     const newCard = {
-      id: cards.length + 1,
+      id: (cards.length == 0 ? cards.length + 1 : cards.at(-1).id + 1),
       text: cardText
     }
+
+    console.log(newCard.id)
     
-    setCards(prevStates => [...prevStates, newCard])
+    setCards(prevState => {
+      localStorage.setItem("cards", JSON.stringify([...prevState, newCard])) 
+      return [...prevState, newCard]
+    })
     setCardText("")
   }
+  
+  useEffect(() => {
+    if (localStorage.getItem("cards") === null) {
+      localStorage.setItem("cards", "[]")
+    } else {
+      setCards(JSON.parse(localStorage.getItem("cards")))
+    }
+  }, [])
 
   return (
     <div className="App">
@@ -44,7 +57,7 @@ export function App() {
       <div id="cards">
         {
           cards.map(card => {
-            return <Card key={card.id} text={card.text} />
+            return <Card key={card.id} id={card.id} text={card.text} remove={[cards, setCards]}/>
           })
         }
       </div>
